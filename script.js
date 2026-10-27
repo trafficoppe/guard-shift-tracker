@@ -241,7 +241,7 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             titleHtml = `
                 <div class="col-12 d-flex align-items-center">
-                    <span class="post-title-text text-primary fw-bold" style="color: #315d38 !important;">${postName}</span>
+                    <span class="post-title-text text-primary fw-bold" style="color: #2c3e50 !important;">${postName}</span>
                     <input type="hidden" class="point-input" value="${postName}">
                 </div>
             `;
@@ -321,7 +321,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // ส่งข้อมูลฟอร์ม
-    reportForm.addEventListener('submit', async (e) => {
+    reportForm.addEventListener('submit', (e) => {
         e.preventDefault();
 
         if (!CONFIG.GOOGLE_SCRIPT_URL || CONFIG.GOOGLE_SCRIPT_URL === 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE') {
@@ -334,9 +334,6 @@ document.addEventListener('DOMContentLoaded', () => {
             alert('กรุณาเพิ่ม รปภ. อย่างน้อย 1 คน');
             return;
         }
-
-        submitBtn.disabled = true;
-        submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm"></span> กำลังบันทึกข้อมูล...';
 
         const date = document.getElementById('reportDate').value;
         const location = locationInput.value;
@@ -363,36 +360,31 @@ document.addEventListener('DOMContentLoaded', () => {
             guards: guardData
         };
 
-        try {
-            await fetch(CONFIG.GOOGLE_SCRIPT_URL, {
-                method: 'POST',
-                mode: 'no-cors',
-                headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-                body: JSON.stringify(payload)
-            });
+        // 1. ยิงข้อมูลไปหลังบ้าน (เบื้องหลัง) โดยไม่ต้องรอให้เสร็จ (ลบ await ออก)
+        fetch(CONFIG.GOOGLE_SCRIPT_URL, {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+            body: JSON.stringify(payload)
+        }).catch(error => {
+            console.error('Error in background sync:', error);
+        });
 
-            alert('บันทึกข้อมูลลง Sheet สำเร็จ!');
-            
-            // รีเซ็ตค่าและกลับไปหน้าเลือกพื้นที่
-            reportForm.reset();
-            document.getElementById('reportDate').valueAsDate = new Date();
-            locationInput.value = '';
-            document.querySelectorAll('input[name="shift"]').forEach(radio => radio.checked = false);
-            guardListContainer.innerHTML = '';
-            addCustomPostContainer.style.display = 'none';
-            updateTotalCount();
-            
-            mainFormView.style.display = 'none';
-            unitSelectionView.style.display = 'block';
-            pageMainTitle.textContent = 'รายงานจำนวน รปภ. ประจำวัน';
-            pageMainTitle.style.color = '#2c3e50';
-
-        } catch (error) {
-            console.error('Error:', error);
-            alert('เกิดข้อผิดพลาดในการบันทึกข้อมูล');
-        } finally {
-            submitBtn.disabled = false;
-            submitBtn.textContent = 'บันทึกข้อมูลลง Google Sheet';
-        }
+        // 2. แสดง Popup "เรียบร้อย" ทันที โดยไม่ต้องรอ Google Sheet
+        document.getElementById('successPopup').classList.remove('d-none');
+        
+        // 3. รีเซ็ตฟอร์มและกลับไปหน้าแรกทันที
+        reportForm.reset();
+        document.getElementById('reportDate').valueAsDate = new Date();
+        locationInput.value = '';
+        document.querySelectorAll('input[name="shift"]').forEach(radio => radio.checked = false);
+        guardListContainer.innerHTML = '';
+        addCustomPostContainer.style.display = 'none';
+        updateTotalCount();
+        
+        mainFormView.style.display = 'none';
+        unitSelectionView.style.display = 'block';
+        pageMainTitle.textContent = 'รายงานจำนวน รปภ. ประจำวัน';
+        pageMainTitle.style.color = '#2c3e50';
     });
 });
