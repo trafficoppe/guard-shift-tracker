@@ -1,0 +1,160 @@
+body {
+    background-color: #f0f4f2; /* สีพื้นหลังอมเขียวอ่อนๆ ให้ดูสบายตา */
+    font-family: 'Anuphan', sans-serif;
+    font-weight: 400; 
+    font-size: 15px; 
+    color: #333333; 
+}
+
+.container {
+    max-width: 800px;
+    background: #ffffff;
+    padding: 30px 20px; 
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    border-top: 8px solid #a5c184; /* สีเขียวอ่อนใบไม้จากโลโก้ */
+    margin-bottom: 30px;
+}
+
+.header-title {
+    color: #315d38; /* สีเขียวเข้มตัวหนังสือโลโก้ */
+    font-weight: 700;
+    font-size: 1.5rem;
+}
+
+.form-control, .form-select {
+    font-family: 'Anuphan', sans-serif;
+    font-weight: 400; 
+    font-size: 15px; 
+    color: #333333; 
+    padding: 10px 12px; 
+    border-radius: 8px;
+    border: 1px solid #ced4da;
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: #315d38;
+    box-shadow: 0 0 0 0.25rem rgba(49, 93, 56, 0.25);
+}
+
+.btn {
+    font-family: 'Anuphan', sans-serif;
+    font-weight: 500; 
+    font-size: 15px; 
+    padding: 8px 12px;
+    border-radius: 8px;
+}
+
+/* ปุ่มสีหลักของธีม */
+.btn-theme {
+    background-color: #315d38;
+    border-color: #315d38;
+    color: #ffffff;
+}
+
+.btn-theme:hover, .btn-theme:focus {
+    background-color: #24472a;
+    border-color: #24472a;
+    color: #ffffff;
+}
+
+/* ปุ่ม Outline สีหลัก */
+.btn-outline-theme {
+    color: #315d38;
+    border-color: #315d38;
+}
+
+.btn-outline-theme:hover {
+    background-color: #315d38;
+    color: #fff;
+}
+
+/* ปุ่มที่ถูกเลือก (Check) */
+.btn-check:checked + .btn-outline-theme {
+    background-color: #315d38;
+    color: #fff;
+    border-color: #315d38;
+}
+
+.post-card {
+    background: #ffffff;
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    border-left: 6px solid #a5c184; /* แถบด้านซ้ายสีเขียวอ่อน */
+    border-top: 1px solid #e9ecef;
+    border-right: 1px solid #e9ecef;
+    border-bottom: 1px solid #e9ecef;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+}
+
+.post-title {
+    font-weight: 500;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.post-title-text {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #315d38; /* เปลี่ยนชื่อจุดเป็นสีเขียวเข้ม */
+}
+
+.guard-item {
+    margin-bottom: 10px;
+}
+
+hr {
+    border-color: #e9ecef;
+    margin: 20px 0;
+}
+
+/* ตกแต่งรายการชื่อใน Dropdown ค้นหา */
+.autocomplete-item {
+    padding: 10px 12px;
+    cursor: pointer;
+    border-bottom: 1px solid #f4f6f9;
+}
+
+.autocomplete-item:last-child {
+    border-bottom: none;
+}
+
+.autocomplete-item:hover {
+    background-color: #e8f0e9; /* ไฮไลท์สีเขียวอ่อนเวลาชี้ */
+}
+
+.autocomplete-list::-webkit-scrollbar {
+    width: 6px;
+}
+
+.autocomplete-list::-webkit-scrollbar-thumb {
+    background: #a5c184;
+    border-radius: 4px;
+}
+/* สไตล์สำหรับปุ่มเลือกหน่วยงาน */
+.unit-btn {
+    background-color: #f8f9fa;
+    border: 1px solid #ced4da;
+    color: #2c3e50;
+    /* ตั้งค่า Transition เพื่อให้จังหวะปล่อยปุ่มดูเด้งกลับอย่างนุ่มนวล */
+    transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1); 
+}
+
+/* เอฟเฟกต์เมื่อเอาเมาส์ชี้ (Hover) - เปลี่ยนเป็นสีเขียวกองกายฯ */
+.unit-btn:hover {
+    background-color: #315d38;
+    border-color: #315d38;
+    color: #ffffff;
+    box-shadow: 0 4px 10px rgba(49, 93, 56, 0.3) !important;
+}
+
+/* เอฟเฟกต์เมื่อกดปุ่ม (Active) - ย่อขนาดลง (ยุบ) */
+.unit-btn:active {
+    transform: scale(0.95);
+    background-color: #24472a; 
+    border-color: #24472a;
+    box-shadow: none !important;
+}
